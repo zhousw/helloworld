@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title text-center>{{title}}</ion-title>
+        <ion-buttons right>
+          <button ion-button icon-only color="royal">
+                  <ion-icon></ion-icon>
+          </button>
+      </ion-buttons>
+      </ion-navbar>
+</ion-header>
+  <ion-content scroll="true" overflow-scroll="true">
+    <iframe  style="width: 100%;min-height: 98%;" id="iframepage" scrolling="yes" [src]="fastMailUrl">
+
+    </iframe>
+  </ion-content>
+  

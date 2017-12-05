@@ -1,0 +1,66 @@
+    <ion-header>
+        <ion-navbar color="primary">
+            <ion-title text-center>{{title}}</ion-title>
+            <ion-buttons right>
+                <button ion-button icon-only color="royal">
+                        <ion-icon></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-navbar> 
+    </ion-header>
+    <ion-content>
+      <ion-list>
+          <ion-item>
+              <h2 style="color: red;">货物或应税劳务、服务名称</h2>
+                <input type="text" [(ngModel)]="invoicedel.serviceName" (ionBlur)="onblursHW()" style="width: 80%;float: left;" placeholder="请输入货物或应税劳务、服务名称">
+                <button ion-button style="float: right;margin-top:-3px;" (click)="openInvoicedelServiceInfo()">
+                        <ion-icon ios="ios-search" md="md-search"></ion-icon>&nbsp;选择
+                </button>
+          </ion-item>
+          <ion-item>
+              <ion-label style="color: black;font-size:1em" stacked>规格型号</ion-label>
+              <ion-input type="text" [(ngModel)]="invoicedel.typeInfo" style="width: 100%;" placeholder="请输入规格型号"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="color: red;font-size:1em" stacked>计量单位</ion-label>
+              <ion-input type="text" [(ngModel)]="invoicedel.unitInfo" style="width: 100%;" placeholder="请输入计量单位"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="color: red;font-size:1em" stacked>数量</ion-label>
+              <ion-input type="text" [(ngModel)]="invoicedel.size" style="width: 100%;"  placeholder="请输入数量" (ionBlur)="alterAmount();"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="color: black;font-size:1em" stacked>单价(含税)</ion-label>
+              <ion-input type="text" [(ngModel)]="invoicedel.price" style="width: 100%;"  placeholder="请输入单价" (ionBlur)="alterAmount();"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="color: red;font-size:1em">税率或征收率</ion-label>
+              <ion-select interface="popover" [(ngModel)]="invoicedel.taxr"  ng-change="alterAmount();">
+                  <ion-option value="17%">17%</ion-option>
+                  <ion-option value="13%">13%</ion-option>
+                  <ion-option value="11%">11%</ion-option>
+                  <ion-option value="6%">6%</ion-option>
+                  <ion-option value="5%">5%</ion-option>
+                  <ion-option value="3%">3%</ion-option>
+                  <ion-option value="0%">0%</ion-option>
+              </ion-select>
+          </ion-item> 
+          <ion-item>
+              <ion-label style="color: red;font-size:1em"  stacked>金额(含税)</ion-label>
+              <ion-input type="text"  [(ngModel)]="invoicedel.amount" style="width: 100%;" placeholder="请输入金额" (ionBlur)="alterAmount();"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="color: red;font-size:1em"  stacked>税额</ion-label>
+              <ion-input type="text" [(ngModel)]="invoicedel.taxAmount" style="width: 100%;" placeholder="请输入税额"></ion-input>
+          </ion-item> 
+
+          <div text-center>
+              <button ion-button style="width: 58%;" (click)="subInvoicedel();">
+                  确定
+              </button>
+              <button  ion-button color="danger" style="width: 38%;" (click)="clearKpmx();">
+                  清空
+              </button>
+          </div>
+      </ion-list>
+    </ion-content>

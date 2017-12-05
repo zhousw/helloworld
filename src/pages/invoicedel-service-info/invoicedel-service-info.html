@@ -1,0 +1,27 @@
+  <ion-header>
+      <ion-navbar color="primary">
+          <ion-title text-center>{{title}}</ion-title>
+          <ion-buttons right>
+            <button ion-button icon-only color="royal">
+                    <ion-icon></ion-icon>
+            </button>
+        </ion-buttons>
+      </ion-navbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let invoicedelServiceInfo of invoicedelServiceInfoList;let idx=index" >
+        <div class="row" style="padding: 0px;" >
+          <div class="col col-90" (click)="selectInvoicedelServiceInfo(invoicedelServiceInfo)">
+            <h2><b>{{invoicedelServiceInfo.serviceName}}</b></h2>
+          </div>
+          <ion-option ion-button (click)="deleteInvoicedelServiceInfo(idx)">
+              删除
+          </ion-option>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="invoicedelServiceInfoList.length == 0">
+        <h2>没有找到结果！</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>

@@ -1,0 +1,26 @@
+
+  <ion-header class="bar-positive">
+    <ion-navbar color="primary">
+      <ion-title text-center>{{title}}</ion-title>
+      <ion-buttons right>
+        <button ion-button icon-only color="royal">
+                <ion-icon></ion-icon>
+        </button>
+    </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding="true" >
+    <ion-list >
+      <ion-item *ngFor="let client of clientLists" (click)="selectXsClient(client.id,client.taxNum,client.name,client.address,client.phone,client.bank,client.account)">
+        <div class="row" style="padding: 0px;">
+          <div class="col col-90">
+            <h2><b>{{client.name}}</b></h2>
+            <p>税号：{{client.taxNum}}</p>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="clientLists.length == 0">
+        <h2>没有找到结果！</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>

@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-toolbar>
+            <ion-title text-center>{{title}}</ion-title>
+            <ion-buttons end>
+                <button ion-button icon-only color="royal" (click)="openCamera();">
+                        <ion-icon ios="ios-camera" large md="md-camera"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-navbar>
+</ion-header>
+    <ion-content delegate-handle="imgUploadScroll">
+        <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll> -->
+        <ion-list>
+            <ion-item *ngIf="uploadImgSrcs.length == 0" text-center>
+                <span class="rem-3">拍摄或从图库中选择图片！</span>
+            </ion-item>
+            <ion-list *ngFor="let img of uploadImgSrcs;let idx=index">
+                    <ion-item (click)="delUploadImgSrcs(idx);">
+                        <img class="full-image" src="{{img}}">
+                    </ion-item>
+            </ion-list>
+            
+            <ion-item text-center>
+                <button  ion-button large style="width: 58%;" (click)="selectImg();">
+                  从图库中选择
+                </button>
+                <button  color="danger" large ion-button style="width: 38%;" (click)="clearImg();">
+                  清空
+                </button>
+                <button  ion-button block large (click)="subImg();">
+                  确定
+                </button>
+            </ion-item>
+        </ion-list>
+    </ion-content>

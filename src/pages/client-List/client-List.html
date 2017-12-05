@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-toolbar>
+            <ion-buttons left>
+                <button ion-button menuToggle icon-only color="royal">
+                        <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+                </button>
+            </ion-buttons>
+            <ion-title text-center>{{title}}</ion-title>
+            <ion-buttons right>
+                <button ion-button icon-only color="royal" (click)="addClient();">
+                    <ion-icon ios="ios-add-outline" md="md-add" ></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-navbar>
+</ion-header>
+    <ion-content>
+        <ion-refresher (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="松开刷新"
+                refreshingSpinner="circles"
+                refreshingText="正在刷新···">
+            </ion-refresher-content>
+         </ion-refresher>
+        <ion-list>
+            <ion-item>
+                <ion-label>选择：</ion-label>
+                <ion-select interface="popover"  *ngFor="let prop of propList">
+                    <ion-option [(ngModel)]="fieldName.value" ngOnChanges="buildParamString()">{{prop.fieldName}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="paramStringFieldList.length == 0">
+                <input type="text" style="width:80%" [(ngModel)]="paramString.value" placeholder="关键字"/>
+                <button ion-button style="font-size:1em;margin-top:-5px;" (click)="initData()">
+                        搜索
+                </button>
+            </ion-item>
+            <ion-item *ngIf="paramStringFieldList.length != 0">
+                <ion-label>选择：</ion-label>
+                <ion-select interface="popover" *ngFor="let paramStringField of paramStringFieldList">
+                    <ion-option [(ngModel)]="paramString.value" >{{paramStringField}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+        </ion-list>
+
+        <ion-list>
+            <ion-item class="myItem" *ngFor="let client of clientLists">
+                <div class="row" (click)="clientDetail(client.id)">
+                    <div class="col col-90">
+                        <h2><b>{{client.name}}</b></h2>
+                        <p>税号：{{client.taxNum}}</p>
+                    </div>
+                    <div class="col col-10 col-center">
+                        <i class="icon ion-chevron-right rem-5" ></i>
+                    </div>
+                 </div>
+                    <button ion-button color="danger" style="font-size:1em;" (click)="delete(client.id)">删除</button>
+                    <button ion-button style="font-size:1em;" (click)="edit(client.id)">编辑</button>
+            </ion-item>
+            
+            <ion-item *ngIf="clientLists.length == 0">
+                    <h2>没有找到结果！</h2>
+            </ion-item>
+        </ion-list>
+        
+       <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="正在加载···">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-content>

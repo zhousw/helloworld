@@ -1,0 +1,43 @@
+
+    <ion-header class="bar-positive">
+        <ion-navbar color="primary">
+            <ion-title text-center>{{title}}</ion-title>
+            <ion-buttons right>
+                <button ion-button icon-only color="royal">
+                        <ion-icon></ion-icon>
+                </button>
+            </ion-buttons>
+          </ion-navbar>
+    </ion-header>
+    <ion-content >
+        <ion-refresher (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="松开刷新"
+                refreshingSpinner="circles"
+                refreshingText="正在刷新···">
+            </ion-refresher-content>
+         </ion-refresher>
+        <ion-list>
+            <ion-item>
+                <input type="text" [(ngModel)]="wClientParams.value" style="width:80%" placeholder="客户名称或税号">
+                <button ion-button (click)="initWxkpClientData()" style="margin-top:-8px;width:20%">
+                    搜索
+                </button>
+            </ion-item>
+            <ion-item *ngFor="let client of clientLists" (click)="selectClient(client.id,client.taxNum,client.name,client.address,client.phone,client.bank,client.account)">
+                    <h2>{{client.name}}</h2>
+                    <p>税号：{{client.taxNum}}</p>
+            </ion-item>
+            <ion-item *ngIf="clientLists.length == 0">
+                没有找到结果!
+            </ion-item>
+                    
+        </ion-list>
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="正在加载···">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-content>

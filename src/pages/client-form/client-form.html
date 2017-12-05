@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="primary">
+      <ion-title text-center>{{title}}</ion-title>
+      <ion-buttons right>
+        <button ion-button icon-only color="royal">
+                <ion-icon></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+  <ion-content >
+    <ion-list>
+      <ion-item>
+        <ion-label style="color: red;float: left;width: 20%">客户名称</ion-label>
+        <ion-input type="text" [(ngModel)]="client.name" style="width: 80%;" placeholder="请输入客户名称" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label style=" float: left;width: 20%">税号</ion-label>
+        <ion-input type="text" [(ngModel)]="client.taxNum" style="width: 80%;" placeholder="请输入税号"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label style=" float: left;width: 20%">地址</ion-label>
+        <ion-input type="text" [(ngModel)]="client.address" style="width: 80%;" placeholder="请输入地址"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label style=" float: left;width: 20%">联系电话</ion-label>
+        <ion-input type="text" [(ngModel)]="client.phone" style="width: 80%;" placeholder="请输入联系电话"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label style=" float: left;width: 20%">开户行</ion-label>
+        <ion-input type="text" [(ngModel)]="client.bank" style="width: 80%;" placeholder="请输入开户行"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label style=" float: left;width: 20%">账号</ion-label>
+        <ion-input type="text" [(ngModel)]="client.account" style="width: 80%;" placeholder="请输入帐号"></ion-input>
+      </ion-item>
+
+          <button ion-button block (click)="subFData();">
+              提交
+          </button>
+    </ion-list>
+  </ion-content>

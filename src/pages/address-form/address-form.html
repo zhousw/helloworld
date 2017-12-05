@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar  color="primary">  
+      <ion-title text-center>{{title}}</ion-title>
+      <ion-buttons right>
+        <button ion-button icon-only color="royal">
+                <ion-icon></ion-icon>
+        </button>
+    </ion-buttons>
+    </ion-navbar>
+</ion-header>
+    <ion-content>
+       
+      <ion-list>
+        <ion-item>
+          <ion-label style="color: red;">收件人</ion-label>
+          <ion-input type="text" [(ngModel)]="address.consignee" required placeholder="请输入收件人"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label style="color: red;">联系电话</ion-label>
+          <ion-input type="text" [(ngModel)]="address.phone" required placeholder="请输入联系电话"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label style="color: red;">地址</ion-label>
+          <ion-textarea [(ngModel)]="address.address" rows="3" required style="width: 100%;resize:none;"  placeholder="请输入地址"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>是否默认</ion-label>
+          <ion-toggle [(ngModel)]="defaultVal.value"></ion-toggle>
+        </ion-item>
+        <button ion-button full (click)="subFData();">
+            提交
+        </button>
+      </ion-list>
+    </ion-content>

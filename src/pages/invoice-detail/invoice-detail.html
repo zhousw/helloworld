@@ -1,0 +1,187 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-title text-center>{{title}}</ion-title>
+      <ion-buttons right>
+        <button ion-button icon-only color="royal">
+                <ion-icon></ion-icon>
+        </button>
+    </ion-buttons>
+    </ion-navbar>
+</ion-header>
+    <ion-content>
+
+        <div text-center id="galleryFP" *ngFor="let files of fileList;let idx = index">
+          <a data-href="{{rootPath + files.fileAdr}}" data-size="1600x1600"   (click)="openPS(idx)">
+            <img src="{{rootPath + files.fileAdr}}" style="width: 100%; height: 100%;" alt="" />
+            <figure *ngIf="files.fileName.indexOf('手机app上传') != -1">我上传的图片</figure>
+            <figure *ngIf="files.fileName.indexOf('手机app上传') == -1">发票</figure>
+          </a>
+        </div>
+
+        <ion-card *ngIf="invoice.state == '已开票'">
+            <ion-list text-center>
+                <button ion-item style="width: 48%;" (click)="openInvoiceCkModal();" >
+                    申请重开
+                </button>
+                <button ion-item style="width: 48%;" (click)="openInvoiceZfModal();" >
+                     申请作废
+                </button>
+                <button ion-button full  (click)="subFQR();">
+                    确认发票<br>(距离自动确认还有:{{djsDateQR.value}})
+                 </button>
+            </ion-list>
+        </ion-card>
+
+        <div class="list card" text-center *ngIf="invoice.state == '已快递'">
+            <button ion-button full  (click)="subFSH();">
+              确认收件<br>(距离自动收件还有:{{djsDateSH.value}})
+            </button>
+        </div>
+
+    <ion-list>
+          <ion-item style="overflow:auto; ">
+              <h2 style="float: left;width: 40%;">当前状态</h2>
+              <p style="color: red;float:right;width: 60%">{{invoice.state}}</p>
+          </ion-item>
+          <ion-item>
+              <h2>处理信息</h2>
+              <p *ngFor="let idea of invoice.ideas">{{idea}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto;">
+              <h2 style="float: left;width: 40%;">快递单号查询</h2>
+              <a (click)="fastMailCheck();"  style="float:right;width: 60%;">{{invoice.expressNum}}</a>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">发票类型</h2>
+            <p style="width: 60%;float:right;">{{invoice.typeInfo}}</p>
+          </ion-item>
+          <ion-item text-center>
+            <h2 style="color: red;">销售方信息</h2>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">客户名称</h2>
+            <p style="width: 60%;float:right;">{{invoice.namexs}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%">纳税人识别号</h2>
+            <p style="width: 60%;float:right;">{{invoice.taxNumxs}}</p>
+          </ion-item>
+          <ion-item text-center>
+            <h2 style="color: red;">购买方信息</h2>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">客户名称</h2>
+            <p style="width: 60%;float:right;">{{invoice.gname}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">纳税人识别号</h2>
+            <p style="width: 60%;float:right;">{{invoice.taxNum}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">地址</h2>
+            <p style="width: 60%;float:right;">{{invoice.address}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">电话</h2>
+            <p style="width: 60%;float:right;">{{invoice.phone}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">开户行</h2>
+            <p style="width: 60%;float:right;">{{invoice.bank}}</p>
+          </ion-item>
+          <ion-item style="overflow:auto; ">
+            <h2 style="float: left;width: 40%;">账号</h2>
+            <p style="width: 60%;float:right;">{{invoice.account}}</p>
+          </ion-item>
+          <ion-item text-center>
+            <h2 style="color: red;">货物或服务明细</h2>
+          </ion-item>
+       
+        <ion-list *ngFor="let invoicedel of invoice.invoicedelList;let idx = index" >
+            <ion-item text-center (click)="lookInvoicedel(idx)">
+                <h2>{{invoicedel.serviceName}}</h2>
+                <p>金额(含税)：{{invoicedel.amount}}</p>
+                <p>税额：{{invoicedel.taxAmount}}</p>
+            </ion-item>
+            <ion-item *ngIf="invoice.invoicedelList.length == 0">
+                <h2>没有找到结果！</h2>
+            </ion-item>
+        </ion-list>
+            <ion-item text-center>
+                <p>票面金额：{{invoice.totalAmount}}元，税额：{{invoice.totalTaxAmount}}元</p>
+            </ion-item>
+            <ion-item text-center>
+                <h2 style="color: red;">签收信息</h2>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2 style="float: left;width: 40%;">签收类型</h2>
+                <p style="width: 60%;float:right;">{{invoice.signInType}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2 style="float: left;width: 40%;">收件人</h2>
+                <p style="width: 60%;float:right;">{{invoice.addressConsignee}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2 style="float: left;width: 40%;">联系电话</h2>
+                <p style="width: 60%;float:right;">{{invoice.addressPhone}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2  style="float: left;width: 40%;">收件地址</h2>
+                <p style="width: 60%;float:right;">{{invoice.addressAddress}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2  style="float: left;width: 40%;">收件单位名称</h2>
+                <p style="width: 60%;float:right;">{{invoice.addressGsName}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2  style="float: left;width: 40%;">最后操作时间</h2>
+                <p style="width: 60%;float:right;">{{invoice.alterDate}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2  style="float: left;width: 40%;">创建时间</h2>
+                <p style="width: 60%;float:right;">{{invoice.createDate}}</p>
+            </ion-item>
+            <ion-item style="overflow:auto; ">
+                <h2 style="float: left;width: 40%;">备注</h2>
+                <p  style="width: 60%;float:right;">{{invoice.idea}}</p>
+            </ion-item>
+    </ion-list>
+        
+</ion-content>
+
+  <!-- <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+      <div class="pswp__ui pswp__ui--hidden">
+        <div class="pswp__top-bar" style="margin-top: 55px;">
+          <div class="pswp__counter"></div>
+          <button class="pswp__button pswp__button--close" title="关闭"></button>
+          <button class="pswp__button pswp__button--share" title="分享"></button>
+          <button class="pswp__button pswp__button--fs" title="全屏"></button>
+          <button class="pswp__button pswp__button--zoom" title="缩放"></button>
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+        <button class="pswp__button pswp__button--arrow--left" title="上一张">
+        </button>
+        <button class="pswp__button pswp__button--arrow--right" title="下一张">
+        </button>
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div> 
+ -->

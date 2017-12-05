@@ -1,0 +1,30 @@
+  <ion-header class="bar-positive">
+      <ion-navbar color="primary">
+          <ion-title text-center>{{title}}</ion-title>
+          <ion-buttons right>
+            <button ion-button icon-only color="royal">
+                    <ion-icon></ion-icon>
+            </button>
+        </ion-buttons>
+      </ion-navbar>
+  </ion-header>
+  <ion-content >
+      <ion-list >
+          <ion-item *ngFor="let address of addressLists" (click)="selectAddress(address.consignee,address.phone,address.address);">
+              <div class="row" style="padding: 0px;">
+                <div class="col col-90">
+                  <h2><b>{{address.consignee}}</b></h2>
+                  <p>联系电话：{{address.phone}}</p>
+                  <p>收件地址：{{address.address}}</p>
+                  <p>所属客户：{{address.wXKPClientName}}</p>
+                </div>
+                <div class="col col-10 col-center">
+                  <i class="icon ion-chevron-right rem-5" ></i>
+                </div>
+              </div>
+          </ion-item>
+          <ion-item *ngIf="addressLists.length == 0">
+              <h2>没有找到结果！</h2>
+          </ion-item>
+      </ion-list>
+  </ion-content>

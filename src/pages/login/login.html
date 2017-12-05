@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-title text-center style="height:40px;">{{title}}</ion-title>   
+</ion-header>
+<ion-content padding="true">
+        <div class="text-center padding-top" text-center>
+                <img src="assets/imgs/apa7_logo.png" width="128" height="128">
+        </div>
+  <form [formGroup]="loginForm" (submit)="login(loginForm.value)">
+      <ion-item>
+          <ion-label>手机号：</ion-label>
+          <ion-input type="text" formControlName="phone" required></ion-input>
+      </ion-item>
+      
+      <ion-item>
+          <ion-label>密码：</ion-label>
+          <ion-input type="password" formControlName="pwd" required></ion-input>
+      </ion-item>
+      
+    <ion-grid>
+            <ion-row text-center>
+              <ion-col col-12><button ion-button full type="submit">登录</button></ion-col>
+            </ion-row>
+    </ion-grid>
+  </form>
+  <ion-grid>
+    <ion-row>
+        <ion-col col-8>
+            <button class="bar-positive" ion-button outline (click)="rePwd()" >忘记密码?</button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer style="height:5%;">
+    <ion-navbar color="primary">
+        <ion-icon (click)="openSetServerModal()" ios="ios-settings" md="md-settings" style="float:right;font-size:2em;margin-top:-20px;"></ion-icon>
+    </ion-navbar>
+</ion-footer>

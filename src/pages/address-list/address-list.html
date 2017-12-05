@@ -1,0 +1,67 @@
+    <ion-header>
+        <ion-navbar color="primary">
+        <ion-title text-center>{{title}}</ion-title>  
+          <ion-buttons end>
+            <button ion-button icon-only (click)="addAddress();">
+                <ion-icon ios="ios-add-outline" md="md-add"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-navbar>
+    </ion-header>
+    <ion-content>
+         <ion-refresher (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="松开刷新"
+                refreshingSpinner="circles"
+                refreshingText="正在刷新···">
+            </ion-refresher-content>
+         </ion-refresher>
+        <ion-list>
+            <ion-item>
+                <ion-label>选择：</ion-label>
+                <ion-select interface="popover"  *ngFor="let prop of propList">
+                    <ion-option [(ngModel)]="fieldName.value" ngOnChanges="buildParamString()">{{prop.fieldName}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="paramStringFieldList.length == 0">
+                <input type="text" style="width:80%" [(ngModel)]="paramString.value" placeholder="关键字"/>
+                <button ion-button style="margin-top:-5px;font-size:1em;" (click)="initData()">
+                        搜索
+                </button>
+            </ion-item>
+            <ion-item *ngIf="paramStringFieldList.length != 0">
+                <ion-label>选择：</ion-label>
+                <ion-select interface="popover" *ngFor="let paramStringField of paramStringFieldList">
+                    <ion-option [(ngModel)]="paramString.value" >{{paramStringField}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+        
+        <ion-list *ngFor="let address of addressLists">
+            <ion-item  (click)="addressDetail(address.id)">
+                <h2>{{address.consignee}}</h2>
+                <p>电话：{{address.phone}}</p>
+                <p>地址：{{address.address}}</p>
+                <p>是否默认：{{address.isDefault}}</p>
+            </ion-item>
+            <ion-item>
+                <button ion-button color="danger" style="font-size:1em;" (click)="delete(address.id)">
+                    删除
+                </button>
+                <button ion-button style="font-size:1em;" (click)="edit(address.id)">
+                    编辑
+                </button>
+            </ion-item>
+            <ion-item *ngIf="addressLists.length == 0">
+                <h2>没有找到结果！</h2>
+            </ion-item>
+        </ion-list>
+
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="正在加载···">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-content>

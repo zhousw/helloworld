@@ -1,0 +1,183 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title text-center>{{title}}</ion-title>
+        <ion-buttons right>
+            <button ion-button icon-only color="royal">
+                    <ion-icon></ion-icon>
+            </button>
+        </ion-buttons>
+      </ion-navbar>
+</ion-header>
+    
+    <ion-content>
+        <ion-list>
+            <ion-item text-center style="color:red;font-style: italic;">
+                红色字体为必填项，其余选填
+            </ion-item>
+          <ion-item>
+              <ion-label style="color: red;">发票类型</ion-label>
+              <ion-select interface="popover" [(ngModel)]="invoice.typeInfo">
+                  <ion-option value="0">增值税专用发票</ion-option>
+                  <ion-option value="1">增值税普通发票</ion-option>
+                  <ion-option value="2">通用机打发票</ion-option>
+              </ion-select>
+          </ion-item>  
+          <ion-item text-center>
+              销售方信息
+          </ion-item>
+          <ion-item style="overflow: auto">
+              <h2 style="color: red;float: left;width: 30%;">客户名称</h2>
+              <input type="text"  [(ngModel)]="invoice.namexs" style="width: 50%;" placeholder="请输入客户名称" ngOnChanges="custNameChg();" required readonly >
+              <button ion-button style="margin-top:-5px;width: 20%;" (click)="openXSClientConsult()">
+                    <ion-icon ios="ios-search" md="md-search"></ion-icon>&nbsp;选择
+              </button>
+          </ion-item>
+          <ion-item style="overflow: auto">
+              <ion-label style="float: left;color: red;">纳税人识别号</ion-label>
+              <ion-input type="text" [(ngModel)]="invoice.taxNumxs" placeholder="请输入纳税人识别号" readonly required></ion-input>
+          </ion-item>
+          <ion-item text-center>
+              购买方信息
+          </ion-item> 
+          <ion-item style="overflow: auto">
+              <h2 style="color: red;float: left;width: 30%;">客户名称</h2>
+              <input type="text" [(ngModel)]="invoice.gname" style="width: 50%;" (ionBlur)="onblursKH()" placeholder="请输入客户名称" ngOnChanges="custNameChg();" required readonly>
+              <button ion-button style="margin-top:-5px;width: 20%;" (click)="openClientConsult()">
+                <ion-icon ios="ios-search" md="md-search"></ion-icon>&nbsp;选择
+              </button>
+          </ion-item>
+          <ion-item text-center>
+              <button ion-button large style="font-size:1em" (click)="openImgUpload();">
+                    <ion-icon ios="ios-add" md="md-add"></ion-icon>&nbsp;新增或变更可选择上传图片
+              </button>
+          </ion-item>
+          <ion-item>
+              <ion-label style="float: left;color: black;">纳税人识别号</ion-label>
+              <ion-input id = "strName" type="text" [(ngModel)]="invoice.taxNum" (ionBlur)="onblursCheck()"  placeholder="请输入纳税人识别号" style="overflow: auto"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="width: 20%;float: left;color: black;">地址</ion-label>
+              <ion-input type="text" [(ngModel)]="invoice.address" placeholder="请输入地址" style="overflow: auto"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="width: 20%;float: left;color: black;">电话</ion-label>
+              <ion-input type="text" [(ngModel)]="invoice.phone" placeholder="请输入电话" style="overflow: auto"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="width: 20%;float: left;color: black;">开户行</ion-label>
+              <ion-input type="text" [(ngModel)]="invoice.bank" placeholder="请输入开户行" style="overflow: auto"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label style="width: 20%;float: left;color: black;">账号</ion-label>
+              <ion-input type="text" [(ngModel)]="invoice.account" placeholder="请输入帐号" style="overflow: auto"></ion-input>
+          </ion-item>
+
+          <ion-list *ngFor="let img of imgSrcs;let idx=index;">
+              <ion-item>
+                    <img class="full-image" src="{{img}}" (click)="delImgSrcs(idx);">
+              </ion-item>
+          </ion-list>
+
+          <ion-item text-center>
+              货物或服务明细
+          </ion-item>
+          <ion-item style="text-align:center;overflow: auto">
+              <ion-row>
+                  <div style="margin: auto;">
+                      <button ion-button style="font-size:1em" (click)="addInvoicedel()">
+                            <ion-icon ios="ios-add" md="md-add"></ion-icon>&nbsp;选择手工添加明细
+                      </button>
+                  </div>
+              </ion-row>
+              <ion-row>
+                <div style="margin: auto;">
+                    <button ion-button style="font-size:1em" (click)="openHwImgUpload();">
+                            <ion-icon ios="ios-add" md="md-add"></ion-icon>&nbsp;选择图片上传明细
+                    </button>
+                </div>
+              </ion-row>
+          </ion-item>
+          <ion-list *ngFor="let invoicedelVo of invoice.invoicedelVoList;let idx=index">
+                <ion-item>
+                    <ion-row>
+                        <ion-col col-12>
+                          <h2><b>{{invoicedelVo.serviceName}}</b></h2>
+                          <p>金额(含税)：{{invoicedelVo.amount}}</p>
+                          <p>税额：{{invoicedelVo.taxAmount}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <button col-6 ion-button (click)="deleteInvoicedelVo(idx)">
+                        删除
+                    </button>
+                    <button col-6 ion-button (click)="editInvoicedelVo(idx)">
+                        编辑
+                    </button>
+                </ion-item>
+          </ion-list>
+          <ion-item *ngIf="invoice.invoicedelVoList.length == 0">
+                <h2>没有找到结果！</h2>
+            </ion-item>
+            <ion-item text-center>
+                <p>票面金额：{{invoice.totalAmount}}元，税额：{{invoice.totalTaxAmount}}元</p>
+            </ion-item>
+            <ion-list *ngFor="let img of imgHwSrcs;let idx=index">
+                <ion-item>
+                    <span class="badge badge-assertive">
+                        <a class=" icon ion-close-round rem-5" (click)="delHwImgSrcs(idx);"></a>
+                    </span>
+                    <img class="full-image" src="{{img}}">
+                </ion-item>
+            </ion-list>
+
+            <ion-list *ngFor="let img of imgHwSrcs;let idx = index;">
+                <ion-item (click)="delHwImgSrcs(idx);">
+                    <img class="full-image" src="{{img}}">
+                </ion-item>
+            </ion-list>
+          <ion-item text-center>
+              <h2>取票方式</h2>
+          </ion-item>
+           <ion-list radio-group>
+              <ion-item>
+                  <ion-label >上门自取</ion-label>
+                  <ion-radio class="radio" name="invoice.signInType" value="0" checked="true" (click)="alterSignInType(0)"></ion-radio>
+              </ion-item>
+              <ion-item>
+                  <ion-label>购买方收件</ion-label>
+                  <ion-radio class="radio" name="invoice.signInType" value="1" (click)="alterSignInType(1)"></ion-radio>
+              </ion-item>
+              <ion-item>
+                  <ion-label>销售方收件</ion-label>
+                  <ion-radio class="radio" name="invoice.signInType" value="2" (click)="alterSignInType(2)"></ion-radio>
+              </ion-item>
+            </ion-list>
+            
+            <ion-item style="overflow: auto" *ngIf="signInType.value != '0'">
+                <h2 style="color: red;float: left;width: 20%;">收件人</h2>
+                <input type="text" [(ngModel)]="invoice.addressConsignee" style="width: 60%;"  placeholder="请输入收件人">
+                <button ion-button style="margin-top:-5px;" *ngIf="invoice.wXKPClientId != '0' && signInType.value == '1'" (click)="openAddressConsult()">
+                        <ion-icon ios="ios-search" md="md-search"></ion-icon>&nbsp;选择
+                </button>
+            </ion-item>
+            <ion-item *ngIf="signInType.value != '0'">
+                <ion-label style="width: 30%;float: left;color: red;">联系电话</ion-label>
+                <ion-input type="text" [(ngModel)]="invoice.addressPhone" placeholder="请输入联系电话" style="width: 70%;"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="signInType.value != '0'">
+                <ion-label style="color: red;width: 30%;float: left">收件地址</ion-label>
+                <ion-textarea [(ngModel)]="invoice.addressAddress" rows="3" style="width: 70%;resize:none;" placeholder="请输入收件地址"></ion-textarea>
+            </ion-item>
+            <ion-item *ngIf="signInType.value != '0'">
+                <ion-label style="color: black;width: 30%;float: left;">收件单位名称</ion-label>
+                <ion-input type="text" [(ngModel)]="invoice.addressGsName" placeholder="请输入收件单位名称" style="width: 60%;"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+                  <ion-label style="color: black;">备注</ion-label>
+                  <ion-textarea rows="3" [(ngModel)]="invoice.idea" style="width: 70%;resize:none;" placeholder="请输入备注"></ion-textarea>
+            </ion-item>
+
+                <button ion-button block (click)="subFData();">提交</button>
+              
+        </ion-list>
+ </ion-content>

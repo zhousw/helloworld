@@ -1,0 +1,28 @@
+
+<ion-header>
+        <ion-navbar color="primary">
+            <ion-title text-center>{{title}}</ion-title>
+            <ion-buttons right>
+              <button ion-button icon-only color="royal">
+                      <ion-icon></ion-icon>
+              </button>
+          </ion-buttons> 
+        </ion-navbar>  
+</ion-header>
+
+  <ion-content padding="true">
+        <ion-list>
+                  <ion-item>
+                    <ion-label fixed style="font-weight: bold;">服务器地址：</ion-label>
+                    <ion-input type="text" [(ngModel)]='serverPath'></ion-input>
+                  </ion-item>
+         </ion-list>
+
+      <div text-center>
+        <button ion-button block (click)="saveSerPath();">
+            确定
+        </button>
+      </div>
+         
+      
+  </ion-content>

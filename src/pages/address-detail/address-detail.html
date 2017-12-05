@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar  color="primary">  
+    <ion-title text-center>{{title}}</ion-title>
+      <ion-buttons right>
+        <button ion-button icon-only color="royal">
+                <ion-icon></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label style="width:20%;">客户名称</ion-label>
+        <ion-input [(ngModel)]="address.wXKPClientName" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="width:20%;">收件人</ion-label>
+          <ion-input [(ngModel)]="address.consignee" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="width:20%;">联系电话</ion-label>
+          <ion-input [(ngModel)]="address.phone" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="width:20%;">地址</ion-label>
+          <ion-input [(ngModel)]="address.address" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="width:20%;">是否默认</ion-label>
+          <ion-input [(ngModel)]="address.isDefault" readonly></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-content>

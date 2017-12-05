@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar color="primary" hideBackButton="true">
+    <button ion-button menuToggle>
+        <ion-icon ios="ios-menu" md="md-menu"></ion-icon>
+    </button>
+    <ion-title text-center>{{title}}</ion-title>
+    <ion-buttons right>
+        <button ion-button icon-only color="royal">
+                <ion-icon></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div text-center class="item  rem-1 mainColor item-text-wrap" style="font-size:1em;padding: 5px;">
+    <span style="font-weight: bold;">
+      销售方:<br>
+      <ion-row *ngFor="let name of ccNames">
+        <ion-col> 
+         {{name}}
+         </ion-col>
+      </ion-row>
+      开票员:<br>
+      <span *ngFor="let names of kpyNames;let idx = index" >
+          姓名:
+          <ng-container *ngIf="idx<2">
+              {{names}}<br>
+          </ng-container>
+      </span>
+     </span>
+    </div>
+
+    <div class="list home">
+        
+        <div text-center class="item" style="margin-top: 10px;">
+            <div class="row">
+                <button text-center ion-button block large outline (click)="addInvoice()">
+                        <ion-icon ios="ios-create-outline" outline md="md-create"></ion-icon>
+                   &nbsp; 我要开票
+                </button>
+            </div>
+            <div class="row">
+                <button text-center large color="secondary" block  ion-button outline (click)="goInvoice();">
+                        <ion-icon ios="ios-search-outline" outline md="md-search"></ion-icon>
+                    &nbsp;查询
+                </button>
+            </div>
+            <div class="row">
+                 <button text-center large color="danger" block  ion-button outline (click)="openMessageModal();">
+                    <ion-icon ios="ios-chatbubbles-outline" outline md="md-chatbubbles"></ion-icon>
+                    &nbsp;有{{messageBadge}}条消息需要处理···
+                </button>
+            </div>
+        </div>
+    </div>
+</ion-content>

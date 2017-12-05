@@ -1,0 +1,20 @@
+  <ion-header>
+      <ion-navbar color="primary">
+          <ion-title text-center>{{title}}</ion-title>
+          <ion-buttons right>
+              <button ion-button icon-only color="royal">
+                      <ion-icon></ion-icon>
+              </button>
+          </ion-buttons> 
+      </ion-navbar> 
+  </ion-header>
+  <ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label style="color: red;">说明</ion-label>
+            <ion-textarea rows="3" [(ngModel)]="ckDescInfo.value" style="width: 70%;resize:none;" placeholder="请输入说明"></ion-textarea>
+        </ion-item>
+
+        <button ion-button full (click)="subFCK();">提交</button>
+    </ion-list>
+  </ion-content>
